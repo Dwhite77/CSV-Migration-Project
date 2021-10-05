@@ -14,25 +14,29 @@ public class EmployeeObject {
     private Date dateOfEmployment;
     private int salary;
 
-    public EmployeeObject(int employeeID, String prefix, String firstName, String middleInitial, String lastName, String gender, String email, Date dateOfBirth, Date dateOfEmployment, int salary) {
-        this.employeeID = employeeID;
+    public EmployeeObject(String employeeID, String prefix, String firstName, String middleInitial, String lastName, String gender, String email, String dateOfBirth, String dateOfEmployment, String salary) {
+        setEmployeeID(employeeID);
         this.prefix = prefix;
         this.firstName = firstName;
         this.middleInitial = middleInitial;
         this.lastName = lastName;
         this.gender = gender;
         this.email = email;
-        this.dateOfBirth = dateOfBirth;
-        this.dateOfEmployment = dateOfEmployment;
-        this.salary = salary;
+        setDateOfBirth(dateOfBirth); // little bit janky but it should work
+        setDateOfEmployment(dateOfEmployment);
+        setSalary(salary);
+    }
+    public EmployeeObject(){
+
     }
 
     public int getEmployeeID() {
         return employeeID;
     }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
+    public void setEmployeeID(String employeeID) {
+        int employeeIDOut = Integer.valueOf(employeeID);
+        this.employeeID = employeeIDOut;
     }
 
     public String getPrefix() {
@@ -109,15 +113,30 @@ public class EmployeeObject {
         return dateOfEmployment;
     }
 
-    public void setDateOfEmployment(Date dateOfEmployment) {
-        this.dateOfEmployment = dateOfEmployment;
+    public void setDateOfEmployment(String dateOfEmployment) {
+        String[] arrayDOE = null;
+        String year = null;
+        String month = null;
+        String day = null;
+
+        arrayDOE = dateOfEmployment.split("/");
+
+        year = arrayDOE[2];
+        month = arrayDOE[0];
+        day = arrayDOE[1];
+
+        String output = year + "-" + month + "-" +day;
+
+        Date convertedDOE = Date.valueOf(output);
+        this.dateOfEmployment = convertedDOE;
     }
 
     public int getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setSalary(String salary) {
+        int salaryOut = Integer.valueOf(salary);
+        this.salary = salaryOut;
     }
 }
