@@ -1,6 +1,8 @@
 package com.sparta.employee;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class EmployeeObject {
     private int employeeID;
@@ -14,18 +16,19 @@ public class EmployeeObject {
     private Date dateOfEmployment;
     private int salary;
 
-    public EmployeeObject(String employeeID, String prefix, String firstName, String middleInitial, String lastName, String gender, String email, String dateOfBirth, String dateOfEmployment, String salary) {
-        setEmployeeID(employeeID);
+    public EmployeeObject(int employeeID, String prefix, String firstName, String middleInitial, String lastName, String gender, String email, Date dateOfBirth, Date dateOfEmployment, int salary) {
+        this.employeeID = employeeID;
         this.prefix = prefix;
         this.firstName = firstName;
         this.middleInitial = middleInitial;
         this.lastName = lastName;
         this.gender = gender;
         this.email = email;
-        setDateOfBirth(dateOfBirth); // little bit janky but it should work
-        setDateOfEmployment(dateOfEmployment);
-        setSalary(salary);
+        this.dateOfBirth = dateOfBirth;
+        this.dateOfEmployment = dateOfEmployment;
+        this.salary = salary;
     }
+
     public EmployeeObject(){
 
     }
@@ -34,9 +37,8 @@ public class EmployeeObject {
         return employeeID;
     }
 
-    public void setEmployeeID(String employeeID) {
-        int employeeIDOut = Integer.valueOf(employeeID);
-        this.employeeID = employeeIDOut;
+    public void setEmployeeID(int employeeID) {
+        this.employeeID = employeeID;
     }
 
     public String getPrefix() {
@@ -91,52 +93,36 @@ public class EmployeeObject {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
-        String[] arrayDOB = null;
-        String year = null;
-        String month = null;
-        String day = null;
+    public void setDateOfBirth(Date dateOfBirth){
 
-        arrayDOB = dateOfBirth.split("/");
-
-        year = arrayDOB[2];
-        month = arrayDOB[0];
-        day = arrayDOB[1];
-
-        String output = year + "-" + month + "-" +day;
-
-        Date convertedDOB = Date.valueOf(output);
-        this.dateOfBirth = convertedDOB;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Date getDateOfEmployment() {
         return dateOfEmployment;
     }
 
-    public void setDateOfEmployment(String dateOfEmployment) {
-        String[] arrayDOE = null;
-        String year = null;
-        String month = null;
-        String day = null;
+    public void setDateOfEmployment(Date dateOfEmployment) {
 
-        arrayDOE = dateOfEmployment.split("/");
-
-        year = arrayDOE[2];
-        month = arrayDOE[0];
-        day = arrayDOE[1];
-
-        String output = year + "-" + month + "-" +day;
-
-        Date convertedDOE = Date.valueOf(output);
-        this.dateOfEmployment = convertedDOE;
+        this.dateOfEmployment = dateOfEmployment;
     }
 
     public int getSalary() {
         return salary;
     }
 
-    public void setSalary(String salary) {
-        int salaryOut = Integer.valueOf(salary);
-        this.salary = salaryOut;
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeObject{" +
+                "prefix='" + prefix + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleInitial='" + middleInitial + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 }
