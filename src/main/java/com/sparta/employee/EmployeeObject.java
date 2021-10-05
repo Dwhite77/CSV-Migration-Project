@@ -87,8 +87,22 @@ public class EmployeeObject {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public void setDateOfBirth(String dateOfBirth) {
+        String[] arrayDOB = null;
+        String year = null;
+        String month = null;
+        String day = null;
+
+        arrayDOB = dateOfBirth.split("/");
+
+        year = arrayDOB[2];
+        month = arrayDOB[0];
+        day = arrayDOB[1];
+
+        String output = year + "-" + month + "-" +day;
+
+        Date convertedDOB = Date.valueOf(output);
+        this.dateOfBirth = convertedDOB;
     }
 
     public Date getDateOfEmployment() {
