@@ -1,7 +1,6 @@
 package com.sparta.employee;
 
 import java.io.*;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -37,44 +36,28 @@ public class EmployeeMain {
                     int salary  = Integer.parseInt(fields[9]);
                     if (salary < 0) dataGate = false;
                     if(dataGate){
+
+
+
                         employeeArrayList.add(new EmployeeObject(employeeID,prefix,firstName,middleInitial,lastName,gender,email,dateOfBirth,dateOfEmployment,salary));
+
                         //System.out.println("New Employee Object Created");
                     }
                 }
                 catch(Exception e){
                     e.printStackTrace();
                 }
-//                for(int i =0; i< employeeArrayList.size();i++)
-//                    System.out.println(employeeArrayList.get(i).toString());
 
 
 
 
-                //this is where we want to create the employee objects and then add them to the collection
-
-
-
-
-
-
-
-
+            //DatabaseCreation.writeToDB(employeeArrayList);
 
 
 
 
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
 

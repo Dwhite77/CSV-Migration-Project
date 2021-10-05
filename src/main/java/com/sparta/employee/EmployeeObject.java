@@ -1,8 +1,7 @@
 package com.sparta.employee;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 public class EmployeeObject {
     private int employeeID;
@@ -124,5 +123,18 @@ public class EmployeeObject {
                 ", lastName='" + lastName + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeObject that = (EmployeeObject) o;
+        return employeeID == that.employeeID;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(employeeID);
     }
 }
