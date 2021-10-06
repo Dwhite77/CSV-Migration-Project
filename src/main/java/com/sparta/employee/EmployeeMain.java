@@ -76,10 +76,11 @@ public class EmployeeMain {
 
         System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nOddities: "+odditites.size());
 
-        start = System.nanoTime();
+        start = System.currentTimeMillis();
         DatabaseCreation.writeToDB(employeeArrayList);
-        end = System.nanoTime();
-        System.out.println("Time to insert: "+ (end-start));
+        //DatabaseCreation.duplicatesToDB(duplicateArrayList);
+        end = System.currentTimeMillis();
+        System.out.println("Time to insert: "+ (end-start)+"(ms)");
     }
 }
 
