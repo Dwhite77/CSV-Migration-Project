@@ -33,6 +33,7 @@ public class DatabaseCreation {
                     preparedStatement.setString(8,String.valueOf(empArrList.get(i).getDateOfBirth()));
                     preparedStatement.setString(9,String.valueOf(empArrList.get(i).getDateOfEmployment()));
                     preparedStatement.setString(10,String.valueOf(empArrList.get(i).getSalary()));
+                    preparedStatement.execute();
                 }
                 preparedStatement.close();
             }
