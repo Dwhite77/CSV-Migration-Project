@@ -12,9 +12,10 @@ public class InsertStatements implements Runnable{
     private ArrayList<EmployeeObject> empArrList;
     private int lowerBounds;
     private int upperBounds;
+    private int whichInstance;
 
-    public InsertStatements( ArrayList<EmployeeObject> empArrList, int lowerBounds, int upperBounds) {
-
+    public InsertStatements( ArrayList<EmployeeObject> empArrList, int lowerBounds, int upperBounds, int whichInstance) {
+        this.whichInstance = whichInstance;
         this.empArrList = empArrList;
         this.lowerBounds = lowerBounds;
         this.upperBounds = upperBounds;
@@ -46,6 +47,10 @@ public class InsertStatements implements Runnable{
         this.upperBounds = upperBounds;
     }
 
+    public int getWhichInstance() {
+        return whichInstance;
+    }
+
     public void insertStatements() throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             conn.setAutoCommit(false);
@@ -67,7 +72,7 @@ public class InsertStatements implements Runnable{
                     preparedStatement.execute();
                 }
                 preparedStatement.close();
-                System.out.println("Done");
+                System.out.println("Done: "+getWhichInstance());
                 conn.commit();
             }
         }
