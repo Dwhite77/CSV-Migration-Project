@@ -77,9 +77,24 @@ public class EmployeeMain {
         System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nOddities: "+odditites.size());
 
         start = System.currentTimeMillis();
-        DatabaseCreation.writeToDB(employeeArrayList);
-        //DatabaseCreation.duplicatesToDB(duplicateArrayList);
+        DatabaseCreation dBCreation = new DatabaseCreation();
+        dBCreation.writeToDB(employeeArrayList);
+        InsertStatements instance1 = new InsertStatements(employeeArrayList,0, employeeArrayList.size()/2);
+        Thread i1 = new Thread(instance1);
+        i1.start();
+        InsertStatements instance2 = new InsertStatements(employeeArrayList, employeeArrayList.size()/2, employeeArrayList.size());
+        Thread i2 = new Thread(instance2);
+        i2.start();
         end = System.currentTimeMillis();
+        try {
+            i1.join();
+            i2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //DatabaseCreation.duplicatesToDB(duplicateArrayList);
+
         System.out.println("Time to insert: "+ (end-start)+"(ms)");
     }
 }
