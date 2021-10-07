@@ -8,20 +8,20 @@ public class DatabaseCreationSQLite {
     public void writeToDB(ArrayList<EmployeeObject> empArrList) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:week5DB.db")) {
             Statement statement = conn.createStatement();
-
+            conn.setAutoCommit(false);
 
             try{
-                statement.executeUpdate("DROP TABLE \"EMPLOYEE_DATABASE\""); // not sure if this will work from the first running, as i think it will throw an error and quit, due to there not being an employeedatabase to drop
+                statement.executeUpdate("DROP TABLE \"EMPLOYEE_DATABASE\"");
             } catch (SQLException throwables) {
                 //throwables.printStackTrace();
                 System.out.println("No Database, one sec im making it");
             }
-            // but it is what cathy recommended so im going to stick with it
+
 
             statement.executeUpdate("CREATE TABLE \"EMPLOYEE_DATABASE\" (\"EMPLOYEE_ID\" INTEGER NOT NULL, \"PREFIX\" VARCHAR(100), \"FIRST_NAME\" VARCHAR(100),\"MIDDLE_INITIAL\" VARCHAR(100), " +
                     "\"LAST_NAME\" VARCHAR(100), \"GENDER\" VARCHAR(100) ,\"EMAIL\" VARCHAR(100) , \"DATE_OF_BIRTH\" DATE, \"DATE_OF_EMPLOYMENT\" DATE, \"SALARY\" INTEGER, PRIMARY KEY (\"EMPLOYEE_ID\"))"); //"UID" INTEGER PRIMARY KEY AUTOINCREMENT,
             statement.close();
-
+            conn.commit();
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();

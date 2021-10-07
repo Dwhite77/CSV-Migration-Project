@@ -7,7 +7,7 @@ public class DBCreationMYSQL {
 
     public void writeToDB(ArrayList<EmployeeObject> empArrList) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
-
+            conn.setAutoCommit(false);
             Statement statement = conn.createStatement();
 
             try{
@@ -21,7 +21,7 @@ public class DBCreationMYSQL {
             statement.executeUpdate("CREATE TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE (EMPLOYEE_ID INTEGER NOT NULL, PREFIX VARCHAR(100), FIRST_NAME VARCHAR(100),MIDDLE_INITIAL VARCHAR(100), " +
                     "LAST_NAME VARCHAR(100), GENDER VARCHAR(100) ,EMAIL VARCHAR(100) , DATE_OF_BIRTH DATE, DATE_OF_EMPLOYMENT DATE, SALARY INTEGER, PRIMARY KEY (EMPLOYEE_ID))"); //"UID" INTEGER PRIMARY KEY AUTOINCREMENT,
             statement.close();
-
+            conn.commit();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
