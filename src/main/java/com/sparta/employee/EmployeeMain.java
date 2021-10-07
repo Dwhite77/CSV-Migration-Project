@@ -3,8 +3,7 @@ package com.sparta.employee;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class EmployeeMain {
     public static void main(String[] args) {
@@ -19,6 +18,8 @@ public class EmployeeMain {
         try (BufferedReader in = new BufferedReader(new FileReader("EmployeeRecordsLarge.csv"))) { // were going to auto open and close them with this(autocloseable interface), (try with resources)
             in.readLine();
 
+            RegexPatterns regPat = new RegexPatterns();
+
             while ((line = in.readLine()) != null ) {
                 fields = line.split(",");
                 boolean dataGate = true;
@@ -26,17 +27,17 @@ public class EmployeeMain {
                     int employeeID = Integer.parseInt(fields[0]);
                     if (employeeID < 0) dataGate = false;
                     String prefix = fields[1];
-                    if (prefix.length() > 5 || !prefix.matches("[a-zA-Z]+\\.")) dataGate = false;
+                    if (prefix.length() > 5 || !regPat.regexPrefix(prefix)) dataGate = false;
                     String firstName = fields[2];
-                    if (firstName.length() >= 50 || !firstName.matches("\\p{L}+")) dataGate = false;
+                    if (firstName.length() > 50 || !regPat.regexName(firstName)) dataGate = false;
                     String middleInitial = fields[3];
-                    if (middleInitial.length() > 3 || !middleInitial.matches("[a-zA-Z]")) dataGate = false;
+                    if (middleInitial.length() > 3 || !regPat.regexMiddleInital(middleInitial)) dataGate = false;
                     String lastName = fields[4];
-                    if (lastName.length() >= 50 || !lastName.matches("\\p{L}+")) dataGate = false;
+                    if (lastName.length() > 50 || !regPat.regexName(lastName)) dataGate = false;
                     String gender = fields[5];
-                    if (!gender.matches("[MmFf]")) dataGate = false;
+                    if (!regPat.regexGender(gender)) dataGate = false;
                     String email = fields[6];
-                    if (!email.matches("^(.+)@(.+)\\.(.+)$")) dataGate = false;
+                    if (!regPat.regexEmail(email)) dataGate = false;
 
                     java.util.Date dob = new SimpleDateFormat("MM/dd/yyyy").parse(fields[7]);
                     java.sql.Date dateOfBirth = new java.sql.Date(dob.getTime());
@@ -85,7 +86,7 @@ public class EmployeeMain {
         start = System.currentTimeMillis();
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
-        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,1);
+        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,12);
 
         end = System.currentTimeMillis();
         //DatabaseCreation.duplicatesToDB(duplicateArrayList);
