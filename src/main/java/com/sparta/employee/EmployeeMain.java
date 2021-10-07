@@ -59,7 +59,7 @@ public class EmployeeMain {
                         EmployeeObject currentEmp = new EmployeeObject(employeeID,prefix,firstName,middleInitial,lastName,gender,email,dateOfBirth,dateOfEmployment,salary);
 
                         for(int i =0; i< employeeArrayList.size();i++){
-                            if(currentEmp.equals(employeeArrayList.get(i))){ // maybe try to implement some sort of hashmap here to speed it up?
+                            if(currentEmp.equals(employeeArrayList.get(i))){ // maybe try to implement some sort of hashmap here to speed it up, or a stream perhaps?
                                 duplicateArrayList.add(currentEmp);
                                 dupeGate = false;
                                 break;
@@ -88,13 +88,10 @@ public class EmployeeMain {
         System.out.println("Time to create employee objects: "+ (end-start)+"(ms)");
         System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nCorrupt Data: "+odditites.size());
 
-        int empLen = employeeArrayList.size();
-
-
         start = System.currentTimeMillis();
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
-        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,12);
+        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,48);
 
         end = System.currentTimeMillis();
         //DatabaseCreation.duplicatesToDB(duplicateArrayList);

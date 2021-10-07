@@ -53,7 +53,7 @@ public class InsertStatements implements Runnable{
 
     public void insertStatements() throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
-            conn.setAutoCommit(false);
+//            conn.setAutoCommit(false);
             if (!empArrList.isEmpty()) {
                 PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_TABLE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
                         + "VALUES(?,?,?,?,?,?,?,?,?,?)");
@@ -73,7 +73,7 @@ public class InsertStatements implements Runnable{
                 }
                 preparedStatement.close();
                 System.out.println("Done: "+getWhichInstance());
-                conn.commit();
+//                conn.commit();
             }
         }
         catch (SQLException sqle){
