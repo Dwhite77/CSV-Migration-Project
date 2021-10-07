@@ -9,7 +9,7 @@ public class TestDataBaseCreation {
     @Test
     public void testCreateATable(){
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<EmployeeObject>();
-        DatabaseCreation dBCreation = new DatabaseCreation();
+        DatabaseCreationSQLite dBCreation = new DatabaseCreationSQLite();
         dBCreation.writeToDB(employeeArrayList);
     }
 

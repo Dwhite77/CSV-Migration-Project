@@ -47,10 +47,10 @@ public class InsertStatements implements Runnable{
     }
 
     public void insertStatements() throws SQLException {
-        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:week5DB.db")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             conn.setAutoCommit(false);
             if (!empArrList.isEmpty()) {
-                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
+                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_TABLE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
                         + "VALUES(?,?,?,?,?,?,?,?,?,?)");
 
                 for (int i = getLowerBounds(); i < getUpperBounds(); i++) {
@@ -66,6 +66,7 @@ public class InsertStatements implements Runnable{
                     preparedStatement.setString(10, String.valueOf(getEmpArrList().get(i).getSalary()));
                     preparedStatement.execute();
                 }
+                preparedStatement.close();
                 System.out.println("Done");
                 conn.commit();
             }
