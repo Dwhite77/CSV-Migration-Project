@@ -48,6 +48,7 @@ public class InsertStatements implements Runnable{
 
     public void insertStatements() throws SQLException {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:week5DB.db")) {
+            conn.setAutoCommit(false);
             if (!empArrList.isEmpty()) {
                 PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
                         + "VALUES(?,?,?,?,?,?,?,?,?,?)");
@@ -66,6 +67,7 @@ public class InsertStatements implements Runnable{
                     preparedStatement.execute();
                 }
                 System.out.println("Done");
+                conn.commit();
             }
         }
         catch (SQLException sqle){

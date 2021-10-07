@@ -14,7 +14,7 @@ public class EmployeeMain {
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<EmployeeObject>();
         ArrayList<String[]> odditites = new ArrayList<>();
         ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<EmployeeObject>();
-        try (BufferedReader in = new BufferedReader(new FileReader("EmployeeRecords.csv"))) { // were going to auto open and close them with this(autocloseable interface), (try with resources)
+        try (BufferedReader in = new BufferedReader(new FileReader("EmployeeRecordsLarge.csv"))) { // were going to auto open and close them with this(autocloseable interface), (try with resources)
             in.readLine();
             while ((line = in.readLine()) != null ) {
                 fields = line.split(",");
