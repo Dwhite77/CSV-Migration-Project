@@ -71,13 +71,11 @@ public class EmployeeMain {
                     }
                     else{
                         odditites.add(fields);
-
                     }
                 }
                 catch(Exception e){
                     e.printStackTrace();
                 }
-
 
             }
         }
@@ -91,12 +89,15 @@ public class EmployeeMain {
         start = System.currentTimeMillis();
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
-        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,48);
+        int threads = 48;
+        SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,threads);
 
         end = System.currentTimeMillis();
         //DatabaseCreation.duplicatesToDB(duplicateArrayList);
-
-        System.out.println("Time to insert: "+ (end-start)+"(ms)");
+        int time = Math.toIntExact(end - start);
+//        DBCreationMYSQL.createTimeDB();
+        DBCreationMYSQL.writeTimeTODB(time,threads);
+        System.out.println("Time to insert: "+ (time)+"(ms)");
     }
 }
 // need to rewatch the 12:15 lecture 7/10/2021

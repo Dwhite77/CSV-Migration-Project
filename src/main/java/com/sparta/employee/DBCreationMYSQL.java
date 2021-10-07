@@ -28,6 +28,7 @@ public class DBCreationMYSQL {
     public static void duplicatesToDB(ArrayList<EmployeeObject> empArrList) {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             Statement statement = conn.createStatement();
+            conn.setAutoCommit(false);
             statement.executeUpdate("DROP TABLE EMPLOYEE_DUPLICATES_TABLE");
             statement.executeUpdate("CREATE TABLE EMPLOYEE_DUPLICATES_DATABASE (UID INTEGER PRIMARY KEY AUTOINCREMENT, EMPLOYEE_ID INTEGER NOT NULL, PREFIX VARCHAR(100), FIRST_NAME VARCHAR(100),MIDDLE_INITIAL VARCHAR(100), " +
                     "LAST_NAME VARCHAR(100), GENDER VARCHAR(100) ,EMAIL VARCHAR(100) , DATE_OF_BIRTH DATE, DATE_OF_EMPLOYMENT DATE, SALARY INTEGER)");
@@ -48,14 +49,46 @@ public class DBCreationMYSQL {
                     preparedStatement.setString(9, String.valueOf(empArrList.get(i).getDateOfEmployment()));
                     preparedStatement.setString(10, String.valueOf(empArrList.get(i).getSalary()));
                     preparedStatement.execute();
+
                 }
                 preparedStatement.close();
+                conn.commit();
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    public static void createTimeDB() {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
+            conn.setAutoCommit(false);
+            Statement statement = conn.createStatement();
+            try{
+                statement.executeUpdate("DROP TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS");
+            } catch (SQLException throwables) {
+                System.out.println("No TABLE, one sec im making it");
+            }
 
+            statement.executeUpdate("CREATE TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS (RUNID INTEGER NOT NULL AUTO_INCREMENT, TIME INTEGER NOT NULL, THREADS INTEGER NOT NULL, PRIMARY KEY (RUNID))"); // INTEGER PRIMARY KEY AUTOINCREMENT,
+            statement.close();
+            conn.commit();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
+    public static void writeTimeTODB(int time, int threads){
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
+            conn.setAutoCommit(false);
+            PreparedStatement prepState = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS ( TIME, THREADS)"+"VALUES(?,?)");
+            prepState.setString(1, String.valueOf(time));
+            prepState.setString(2, String.valueOf(threads));
+            prepState.execute();
+            prepState.close();
+            conn.commit();
+            System.out.println("Finished Writing Times");
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
 
 }
