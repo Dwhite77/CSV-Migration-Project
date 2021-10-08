@@ -79,7 +79,7 @@ public class DBCreationMYSQL {
     public static void writeTimeTODB(int time, int threads){
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             conn.setAutoCommit(false);
-            PreparedStatement prepState = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS ( TIME, THREADS)"+"VALUES(?,?)");
+            PreparedStatement prepState = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS ( TIME, THREADS)"+"VALUES(?,?)"); // i want to add another field in here to say whether autocommit is on or off
             prepState.setString(1, String.valueOf(time));
             prepState.setString(2, String.valueOf(threads));
             prepState.execute();

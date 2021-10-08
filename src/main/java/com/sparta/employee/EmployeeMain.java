@@ -9,11 +9,13 @@ public class EmployeeMain {
     public static void main(String[] args) {
         String line = null;
         String[] fields = null;
+
         long start;
         long end;
+
         start = System.currentTimeMillis();
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<EmployeeObject>();
-        ArrayList<String[]> odditites = new ArrayList<>();
+        ArrayList<String[]> oddities = new ArrayList<>();
         ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<EmployeeObject>();
         try (BufferedReader in = new BufferedReader(new FileReader("EmployeeRecordsLarge.csv"))) { // were going to auto open and close them with this(autocloseable interface), (try with resources)
             in.readLine();
@@ -58,8 +60,8 @@ public class EmployeeMain {
                     boolean dupeGate = true;
                         EmployeeObject currentEmp = new EmployeeObject(employeeID,prefix,firstName,middleInitial,lastName,gender,email,dateOfBirth,dateOfEmployment,salary);
 
-                        for(int i =0; i< employeeArrayList.size();i++){
-                            if(currentEmp.equals(employeeArrayList.get(i))){ // maybe try to implement some sort of hashmap here to speed it up, or a stream perhaps?
+                        for (EmployeeObject employeeObject : employeeArrayList) {
+                            if (currentEmp.equals(employeeObject)) { // maybe try to implement some sort of hashmap here to speed it up, or a stream perhaps?
                                 duplicateArrayList.add(currentEmp);
                                 dupeGate = false;
                                 break;
@@ -70,7 +72,7 @@ public class EmployeeMain {
                         }
                     }
                     else{
-                        odditites.add(fields);
+                        oddities.add(fields);
                     }
                 }
                 catch(Exception e){
@@ -78,18 +80,15 @@ public class EmployeeMain {
                 }
 
             }
-        }
-
-        catch(FileNotFoundException e){ e.printStackTrace();}
-        catch (IOException e) { e.printStackTrace(); }
+        } catch(IOException e){ e.printStackTrace();}
         end = System.currentTimeMillis();
         System.out.println("Time to create employee objects: "+ (end-start)+"(ms)");
-        System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nCorrupt Data: "+odditites.size());
+        System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nCorrupt Data: "+oddities.size());
 
         start = System.currentTimeMillis();
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
-        int threads = 48;
+        int threads = 6;
         SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,threads);
 
         end = System.currentTimeMillis();
