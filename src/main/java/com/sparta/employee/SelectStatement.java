@@ -31,7 +31,7 @@ public class SelectStatement {
 
     private void writeResultSet(ResultSet resultSet) throws SQLException {
         resultSet.next();
-        System.out.println(resultSet.toString());
+
         String EmpID = resultSet.getString(1);
         String prefix = resultSet.getString(2);
         String firstName = resultSet.getString(3);
@@ -43,13 +43,14 @@ public class SelectStatement {
         Date dateOE = resultSet.getDate(9);
         String salary = resultSet.getString(10);
 
-//        System.out.println("EmployeeID: "+EmpID);
-//        System.out.println("Name: "+ prefix+firstName+" "+ middleInital+" "+ lastName);
-//        System.out.println("Gender: "+ gender);
-//        System.out.println("Email: "+ email);
-//        System.out.println("DOB: " +dateOB);
-//        System.out.println("Date of Employment: "+dateOE);
-//        System.out.println("Salary: "+salary);
+
+        System.out.println("EmployeeID: "+EmpID);
+        System.out.println("Name: "+ prefix+firstName+" "+ middleInital+" "+ lastName);
+        System.out.println("Gender: "+ gender);
+        System.out.println("Email: "+ email);
+        System.out.println("DOB: " +dateOB);
+        System.out.println("Date of Employment: "+dateOE);
+        System.out.println("Salary: "+salary);
 
 
         }

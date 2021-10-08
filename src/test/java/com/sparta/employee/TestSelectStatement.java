@@ -7,14 +7,14 @@ public class TestSelectStatement {
     @Test
     public void givenAValidEmployeeIDReturnTheirDetails(){
         SelectStatement sStatement = new SelectStatement();
-        sStatement.getEmployeeByID(1);
+        sStatement.getEmployeeByID(2);
 
     }
 
-//    @Test
-//    public void givenAInvalidEmployeeIDReturnTheirDetails(){
-//        SelectStatement sStatement = new SelectStatement();
-//        sStatement.getEmployeeByID(65001);
-//    }
+    @Test
+    public void givenAInvalidEmployeeIDReturnTheirDetails(){
+        SelectStatement sStatement = new SelectStatement();
+        sStatement.getEmployeeByID(65001);
+    }
 
 }
