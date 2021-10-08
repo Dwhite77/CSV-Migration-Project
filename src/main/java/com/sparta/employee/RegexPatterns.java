@@ -8,8 +8,8 @@ public class RegexPatterns {
     private final Pattern regexPatPrefix = Pattern.compile("^[a-zA-Z]+\\.$");
     private final Pattern regexPatName = Pattern.compile("^\\p{L}+$") ;
     private final Pattern regexPatMiddleInital = Pattern.compile("^[a-zA-Z]$");
-    private final Pattern regexPatGender=Pattern.compile("^[MmFf]$");
-    private final Pattern regexPatEmail =Pattern.compile("^(.+)@(.+)\\.(.+)$");
+    private final Pattern regexPatGender = Pattern.compile("^[MmFf]$");
+    private final Pattern regexPatEmail = Pattern.compile("^(.+)@(.+)\\.(.+)$");
 
     public boolean regexPrefix(String strToCompare){
         Matcher matcherPrefix;

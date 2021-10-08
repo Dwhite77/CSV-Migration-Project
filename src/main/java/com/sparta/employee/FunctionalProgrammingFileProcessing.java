@@ -16,5 +16,14 @@ public class FunctionalProgrammingFileProcessing {
             e.printStackTrace();
         }
 
+
+//        Files.lines(Paths.get(filePath)).map(line -> Arrays.stream(line.split(",")).toArray())
+//                .map(line -> tryCleanDates((String[])line))
+//                .filter(DataValidator::isValidEmployeeData)
+//                .map(this::stringArrToEmployee)
+//                .map(WriteableEmployee::new);
+//
+
+
     }
 }
