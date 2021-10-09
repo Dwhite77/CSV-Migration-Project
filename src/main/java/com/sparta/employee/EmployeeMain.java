@@ -6,9 +6,10 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 
 public class EmployeeMain {
@@ -18,10 +19,10 @@ public class EmployeeMain {
 
         long start;
         long end;
-        String filePath = "EmployeeRecordsLarge.csv";
-        ArrayList<EmployeeObject> employeeArrayList = new ArrayList<EmployeeObject>();
+        String filePath = "EmployeeRecords.csv";
+        ArrayList<EmployeeObject> employeeArrayList = new ArrayList<>();
         ArrayList<String[]> oddities = new ArrayList<>();
-        ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<EmployeeObject>();
+        ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<>();
 
 
         start = System.currentTimeMillis();
@@ -33,35 +34,18 @@ public class EmployeeMain {
                     .map(EmployeeMain::isValidData) // (e -> isValidData(e))
                     .collect(Collectors.toCollection(ArrayList::new)));
             for (String[] line : cleanData) {
-                //stringArrToEmployee(line).equals(employeeArrayList.get()); // need to get this to check for dupes
                 employeeArrayList.add(stringArrToEmployee(line));
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
 
-//need to wokr out how to get the duplicated working again
-                
-//                try {
-//                    boolean dupeGate = true;
-//
-//                        for (EmployeeObject employeeObject : employeeArrayList) {
-//                            if (currentEmp.equals(employeeObject)) { // maybe try to implement some sort of hashmap here to speed it up, or a stream perhaps?
-//                                duplicateArrayList.add(currentEmp);
-//                                dupeGate = false;
-//                                break;
-//                            }
-//                        }
-//                        if(dupeGate){
-//                            employeeArrayList.add(currentEmp);
-//                        }
-//
-//                    else{
-//                        oddities.add(fields);
-//                    }
-//
-//        } catch(IOException e){ e.printStackTrace();}
+        } catch (IOException | ParseException e) {e.printStackTrace();}
 
+        Set<EmployeeObject> empHashSet = new HashSet<>();
+        empHashSet.addAll(employeeArrayList); // very quickly gets rid of duplicates, however i do need to get those duplicates into another array
+
+        duplicateArrayList.addAll(getDuplicates(employeeArrayList));
+
+        employeeArrayList.clear();
+        employeeArrayList.addAll(empHashSet);
 
         end = System.currentTimeMillis();
 
@@ -73,7 +57,7 @@ public class EmployeeMain {
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
 
-        int threads = 48;
+        int threads = 6;
         SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,threads);
 
         end = System.currentTimeMillis();
@@ -121,6 +105,20 @@ public class EmployeeMain {
     public static EmployeeObject stringArrToEmployee(String[] inputString) throws ParseException {
         return new EmployeeObject(Integer.parseInt(inputString[0]),inputString[1],inputString[2],inputString[3],inputString[4],inputString[5],inputString[6],Date.valueOf(inputString[7]),Date.valueOf(inputString[8]),Integer.parseInt(inputString[9]));
     }
+
+    public static List<EmployeeObject> getDuplicates(final List<EmployeeObject> empList) {
+        return getDuplicatesMap(empList).values().stream().filter(duplicates ->duplicates.size()>1).flatMap(Collection::stream).collect(Collectors.toList());
+
+    }
+    public static Map<String, List<EmployeeObject>> getDuplicatesMap(List<EmployeeObject> empList){
+        return empList.stream().collect(groupingBy(EmployeeObject::getSEmployeeID));
+    }
+
+
+
+
+
+
 }
 
 

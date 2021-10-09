@@ -1,4 +1,4 @@
-# Sort Manager Project
+# CSV Reading Project
 
 The Sort Manager Project, is a small application used to generate an array of random numbers and them sort them into numerical order.
 ## Table of Contents

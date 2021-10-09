@@ -36,6 +36,7 @@ public class EmployeeObject {
     public int getEmployeeID() {
         return employeeID;
     }
+    public String getSEmployeeID(){return String.valueOf(employeeID);}
 
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;

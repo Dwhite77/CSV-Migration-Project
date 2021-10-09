@@ -1,20 +1,30 @@
 package com.sparta.employee;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestSelectStatement {
+
+    private SelectStatement sStatement = new SelectStatement();
+
     @Test
     public void givenAValidEmployeeIDReturnTheirDetails(){
-        SelectStatement sStatement = new SelectStatement();
+
         sStatement.getEmployeeByID(2);
 
     }
 
     @Test
-    public void givenAInvalidEmployeeIDReturnTheirDetails(){
-        SelectStatement sStatement = new SelectStatement();
-        sStatement.getEmployeeByID(65001);
+    public void givenAInvalidEmployeeIDReturnSERR(){
+
+        sStatement.getEmployeeByID(64300);
+    }
+
+    public void givenAStringReturnSERR(){
+
+
     }
 
 }
