@@ -1,6 +1,7 @@
 package com.sparta.employee;
 
 import java.sql.*;
+import java.util.Scanner;
 import java.util.stream.Stream;
 
 public class SelectStatement {
@@ -20,7 +21,6 @@ public class SelectStatement {
             prepState.setString(1, String.valueOf(employeeID));
             setResultSet(prepState.executeQuery());
             writeResultSet(getResultSet());
-
             prepState.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -45,7 +45,7 @@ public class SelectStatement {
 
 
         System.out.println("EmployeeID: "+EmpID);
-        System.out.println("Name: "+ prefix+firstName+" "+ middleInital+" "+ lastName);
+        System.out.println("Name: "+ prefix+" "+firstName+" "+ middleInital+" "+ lastName);
         System.out.println("Gender: "+ gender);
         System.out.println("Email: "+ email);
         System.out.println("DOB: " +dateOB);
@@ -54,6 +54,22 @@ public class SelectStatement {
 
 
         }
+
+    public static boolean databaseReading(){
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Would you like to search for a record?");
+        String answer1 = scn.next();
+        if(answer1.equals("yes") || answer1.equals("y") || answer1.equals("Y") || answer1.equals("Yes")||answer1.equals("YES")){
+            SelectStatement sS = new SelectStatement();
+            System.out.println("Which employee number would you like?");
+            int answer2 = scn.nextInt();
+            sS.getEmployeeByID(answer2);
+            return true;
+        }
+        else return false;
+    }
+
+
 
 }
 // in here I want to use a lambda expression to create some sql commands as I think this will be a good use for them
