@@ -52,7 +52,7 @@ I have learned how to structure a lambda expression, which at first was difficul
 
 ## Testing <a name="testing"><a/>
 
-During various phases of development there has been a number of JUnit tests that have been carried out, here are couple from various sections of the application.
+During various phases of development there has been a number of JUnit tests that have been carried out, here are a couple from various sections of the application.
 
 ```java
 @Test
