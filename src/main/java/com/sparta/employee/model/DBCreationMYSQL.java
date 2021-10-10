@@ -1,18 +1,18 @@
-package com.sparta.employee;
+package com.sparta.employee.model;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class DBCreationMYSQL {
 
-    public void writeToDB(ArrayList<EmployeeObject> empArrList) {
+    public void createTableInDB() {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             conn.setAutoCommit(false);
             Statement statement = conn.createStatement();
             try{
                 statement.executeUpdate("DROP TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE");
             } catch (SQLException throwables) {
-                System.out.println("No TABLE, one sec im making it");
+                System.out.println("No Table for employees, I will create it now");
             }
 
             statement.executeUpdate("CREATE TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE (EMPLOYEE_ID INTEGER NOT NULL, PREFIX VARCHAR(100), FIRST_NAME VARCHAR(100),MIDDLE_INITIAL VARCHAR(100), " +
@@ -29,13 +29,18 @@ public class DBCreationMYSQL {
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
             Statement statement = conn.createStatement();
             conn.setAutoCommit(false);
-            statement.executeUpdate("DROP TABLE EMPLOYEE_DUPLICATES_TABLE");
-            statement.executeUpdate("CREATE TABLE EMPLOYEE_DUPLICATES_DATABASE (UID INTEGER PRIMARY KEY AUTOINCREMENT, EMPLOYEE_ID INTEGER NOT NULL, PREFIX VARCHAR(100), FIRST_NAME VARCHAR(100),MIDDLE_INITIAL VARCHAR(100), " +
-                    "LAST_NAME VARCHAR(100), GENDER VARCHAR(100) ,EMAIL VARCHAR(100) , DATE_OF_BIRTH DATE, DATE_OF_EMPLOYMENT DATE, SALARY INTEGER)");
+            try{
+                statement.executeUpdate("DROP TABLE EMPLOYEE_DATABASE.EMPLOYEE_DUPLICATES_TABLE");
+            }catch (SQLException throwables){
+                System.out.println("No Table for duplicates, I will create it now");
+            }
+
+            statement.executeUpdate("CREATE TABLE EMPLOYEE_DATABASE.EMPLOYEE_DUPLICATES_TABLE (UID INTEGER NOT NULL AUTO_INCREMENT, EMPLOYEE_ID INTEGER NOT NULL, PREFIX VARCHAR(100), FIRST_NAME VARCHAR(100),MIDDLE_INITIAL VARCHAR(100), " +
+                    "LAST_NAME VARCHAR(100), GENDER VARCHAR(100) ,EMAIL VARCHAR(100) , DATE_OF_BIRTH DATE, DATE_OF_EMPLOYMENT DATE, SALARY INTEGER, PRIMARY KEY (UID))");
             statement.close();
 
             if (!empArrList.isEmpty()) {
-                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DUPLICATES_DATABASE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
+                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE.EMPLOYEE_DUPLICATES_TABLE (EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
                         + "VALUES(?,?,?,?,?,?,?,?,?,?)");
                 for (int i = 0; i < empArrList.size(); i++) {
                     preparedStatement.setString(1, String.valueOf(empArrList.get(i).getEmployeeID()));
@@ -66,7 +71,7 @@ public class DBCreationMYSQL {
             try{
                 statement.executeUpdate("DROP TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS");
             } catch (SQLException throwables) {
-                System.out.println("No TABLE, one sec im making it");
+                System.out.println("No Table for timings, one sec im making it");
             }
 
             statement.executeUpdate("CREATE TABLE EMPLOYEE_DATABASE.EMPLOYEE_TABLE_TIMINGS (RUNID INTEGER NOT NULL AUTO_INCREMENT, TIME INTEGER NOT NULL, THREADS INTEGER NOT NULL, PRIMARY KEY (RUNID))"); // INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -87,7 +92,8 @@ public class DBCreationMYSQL {
             conn.commit();
             System.out.println("Finished Writing Times");
         } catch (SQLException sqle) {
-            sqle.printStackTrace();
+            createTimeDB();
+            writeTimeTODB(time,threads);
         }
     }
 

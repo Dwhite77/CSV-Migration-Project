@@ -1,4 +1,4 @@
-package com.sparta.employee;
+package com.sparta.employee.model;
 
 import java.util.ArrayList;
 

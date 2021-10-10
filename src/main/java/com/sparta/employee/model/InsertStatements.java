@@ -1,4 +1,4 @@
-package com.sparta.employee;
+package com.sparta.employee.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,10 +9,10 @@ import java.util.ArrayList;
 public class InsertStatements implements Runnable{
 
 
-    private ArrayList<EmployeeObject> empArrList;
-    private int lowerBounds;
-    private int upperBounds;
-    private int whichInstance;
+    private final ArrayList<EmployeeObject> empArrList;
+    private final int lowerBounds;
+    private final int upperBounds;
+    private final int whichInstance;
 
     public InsertStatements( ArrayList<EmployeeObject> empArrList, int lowerBounds, int upperBounds, int whichInstance) {
         this.whichInstance = whichInstance;
@@ -27,25 +27,14 @@ public class InsertStatements implements Runnable{
         return empArrList;
     }
 
-    public void setEmpArrList(ArrayList<EmployeeObject> empArrList) {
-        this.empArrList = empArrList;
-    }
-
     public int getLowerBounds() {
         return lowerBounds;
-    }
-
-    public void setLowerBounds(int lowerBounds) {
-        this.lowerBounds = lowerBounds;
     }
 
     public int getUpperBounds() {
         return upperBounds;
     }
 
-    public void setUpperBounds(int upperBounds) {
-        this.upperBounds = upperBounds;
-    }
 
     public int getWhichInstance() {
         return whichInstance;

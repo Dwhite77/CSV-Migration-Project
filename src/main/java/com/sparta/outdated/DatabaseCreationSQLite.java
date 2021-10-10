@@ -1,4 +1,6 @@
-package com.sparta.employee;
+package com.sparta.outdated;
+
+import com.sparta.employee.model.EmployeeObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,35 +30,6 @@ public class DatabaseCreationSQLite {
         }
     }
 
-//
-//    public void insertStatements(PreparedStatement ps, ArrayList<EmployeeObject> empArrList, int lowerBounds,int upperBounds) throws SQLException {
-//        try(Connection conn = DriverManager.getConnection("jdbc:sqlite:week5DB.db")) {
-//            if (!empArrList.isEmpty()) {
-//                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO EMPLOYEE_DATABASE(EMPLOYEE_ID, PREFIX, FIRST_NAME, MIDDLE_INITIAL, LAST_NAME,GENDER,EMAIL,DATE_OF_BIRTH,DATE_OF_EMPLOYMENT,SALARY)"
-//                        + "VALUES(?,?,?,?,?,?,?,?,?,?)");
-//
-//                for (int i = lowerBounds; i < upperBounds; i++) {
-//                    ps.setString(1, String.valueOf(empArrList.get(i).getEmployeeID()));
-//                    ps.setString(2, empArrList.get(i).getPrefix());
-//                    ps.setString(3, empArrList.get(i).getFirstName());
-//                    ps.setString(4, empArrList.get(i).getMiddleInitial());
-//                    ps.setString(5, empArrList.get(i).getLastName());
-//                    ps.setString(6, empArrList.get(i).getGender());
-//                    ps.setString(7, empArrList.get(i).getEmail());
-//                    ps.setString(8, String.valueOf(empArrList.get(i).getDateOfBirth()));
-//                    ps.setString(9, String.valueOf(empArrList.get(i).getDateOfEmployment()));
-//                    ps.setString(10, String.valueOf(empArrList.get(i).getSalary()));
-//                    ps.execute();
-//                }
-//
-//                System.out.println("Done");
-//
-//            }
-//        }
-//        catch (SQLException sqle){
-//            sqle.printStackTrace();
-//        }
-//    }
 
     public static void duplicatesToDB(ArrayList<EmployeeObject> empArrList) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:week5DB.db")) {
@@ -88,7 +61,4 @@ public class DatabaseCreationSQLite {
             throwables.printStackTrace();
         }
     }
-
-
-
 }

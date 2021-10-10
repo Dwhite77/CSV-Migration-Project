@@ -1,4 +1,6 @@
-package com.sparta.employee;
+package com.sparta.employee.model;
+
+import com.sparta.employee.controller.SelectStatement;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -21,10 +23,9 @@ public class EmployeeMain {
         long start;
         long end;
         int threads = 6;
-        String filePath = "EmployeeRecordsLarge.csv";
+        String filePath = "EmployeeRecords.csv";
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<>();
         ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<>();
-
 
         start = System.currentTimeMillis();
 
@@ -53,24 +54,20 @@ public class EmployeeMain {
         System.out.println("Valid entires: "+employeeArrayList.size() +"\nDuplicates: "+ duplicateArrayList.size()+"\nCorrupt Data: "+oddities.size());
 
         start = System.currentTimeMillis();
-
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
-        dBCreation.writeToDB(employeeArrayList);
-
-
+        dBCreation.createTableInDB();
         SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,threads);
-
         end = System.currentTimeMillis();
-       // DBCreationMYSQL.duplicatesToDB(duplicateArrayList);
+
+        if(!duplicateArrayList.isEmpty()){
+            DBCreationMYSQL.duplicatesToDB(duplicateArrayList);
+        }
+
         int time = Math.toIntExact(end - start);
-//        DBCreationMYSQL.createTimeDB(); // i dont want this running everytime otherwise i will lose all of the timing data each time
         DBCreationMYSQL.writeTimeTODB(time,threads);
         System.out.println("Time to insert: "+ (time)+"(ms)");
-
         while(SelectStatement.databaseReading());
     }
-
-    
 
 
     public static String[] isValidData(String[] fields){
@@ -118,15 +115,10 @@ public class EmployeeMain {
                 .collect(Collectors.toList());
 
     }
+
     public static Map<String, List<EmployeeObject>> getDuplicatesMap(List<EmployeeObject> empList){
         return empList.stream().collect(groupingBy(EmployeeObject::getSEmployeeID));
     }
-
-
-
-
-
-
 }
 
 

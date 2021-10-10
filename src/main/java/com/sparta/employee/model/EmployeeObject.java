@@ -1,4 +1,4 @@
-package com.sparta.employee;
+package com.sparta.employee.model;
 
 import java.sql.Date;
 import java.util.Objects;
@@ -28,19 +28,10 @@ public class EmployeeObject {
         this.salary = salary;
     }
 
-
-    public EmployeeObject(){
-
-    }
-
     public int getEmployeeID() {
         return employeeID;
     }
     public String getSEmployeeID(){return String.valueOf(employeeID);}
-
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
 
     public String getPrefix() {
         return prefix;
@@ -60,10 +51,6 @@ public class EmployeeObject {
 
     public String getMiddleInitial() {
         return middleInitial;
-    }
-
-    public void setMiddleInitial(String middleInitial) {
-        this.middleInitial = middleInitial;
     }
 
     public String getLastName() {
@@ -94,18 +81,8 @@ public class EmployeeObject {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth){
-
-        this.dateOfBirth = dateOfBirth;
-    }
-
     public Date getDateOfEmployment() {
         return dateOfEmployment;
-    }
-
-    public void setDateOfEmployment(Date dateOfEmployment) {
-
-        this.dateOfEmployment = dateOfEmployment;
     }
 
     public int getSalary() {
