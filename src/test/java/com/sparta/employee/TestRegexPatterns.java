@@ -1,5 +1,6 @@
 package com.sparta.employee;
 
+import com.sparta.employee.model.RegexPatterns;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
