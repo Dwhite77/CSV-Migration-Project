@@ -23,7 +23,7 @@ public class EmployeeMain {
         long start;
         long end;
         int threads = 6;
-        String filePath = "EmployeeRecords.csv";
+        String filePath = "EmployeeRecordsLarge.csv";
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<>();
         ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<>();
 
