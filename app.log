@@ -1,0 +1,5 @@
+[INFO] 2021-10-10 15:58:08,298 My Application Logger writeResultSet No search results found
+[INFO] 2021-10-10 15:59:08,301 My Application Logger writeResultSet No search results found
+[ERROR] 2021-10-10 16:00:33,383 My Application Logger databaseReading Not a valid input
+[ERROR] 2021-10-10 16:00:33,384 My Application Logger databaseReading Not a valid option
+[INFO] 2021-10-10 16:06:58,127 My Application Logger writeResultSet No search results found

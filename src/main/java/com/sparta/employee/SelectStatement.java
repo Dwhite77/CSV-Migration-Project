@@ -1,5 +1,7 @@
 package com.sparta.employee;
 
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.Locale;
 import java.util.Scanner;
@@ -7,7 +9,7 @@ import java.util.stream.Stream;
 
 public class SelectStatement {
     private ResultSet resultSet;
-
+    private static Logger log = LoggingMain.getLogger();
     public ResultSet getResultSet() {
         return resultSet;
     }
@@ -55,12 +57,15 @@ public class SelectStatement {
 
 
     private void writeResultSet(ResultSet resultSet) throws SQLException {
+
         resultSet.next();
+        int count =0;
         while(resultSet.next()) {
+
             String EmpID = resultSet.getString(1);
             String prefix = resultSet.getString(2);
             String firstName = resultSet.getString(3);
-            String middleInital = resultSet.getString(4);
+            String middleInitial = resultSet.getString(4);
             String lastName = resultSet.getString(5);
             String gender = resultSet.getString(6);
             String email = resultSet.getString(7);
@@ -70,13 +75,18 @@ public class SelectStatement {
 
 
             System.out.println("EmployeeID: " + EmpID);
-            System.out.println("Name: " + prefix + " " + firstName + " " + middleInital + " " + lastName);
+            System.out.println("Name: " + prefix + " " + firstName + " " + middleInitial + " " + lastName);
             System.out.println("Gender: " + gender);
             System.out.println("Email: " + email);
             System.out.println("DOB: " + dateOB);
             System.out.println("Date of Employment: " + dateOE);
             System.out.println("Salary: " + salary);
             System.out.println("-----------------");
+            count++;
+        }
+        if(count == 0){
+            log.info("No search results found");
+            System.err.println("No results for this query");
         }
 
     }
@@ -91,24 +101,38 @@ public class SelectStatement {
             String answer2 = scn.next().toLowerCase();
             if(answer2.equals("firstname") || answer2.equals("f")||  answer2.equals("first")){
                 System.out.println("What first name would you like to search for?");
-                String answer3 = scn.next();
-                try{sS.getEmployeeByFirstName(answer3);} catch (Exception e) {e.printStackTrace();}
+                try{
+                    String answer3 = scn.next();
+                    sS.getEmployeeByFirstName(answer3);
+                } catch (Exception e) {
+                    System.err.println("Not a Valid input");
+                    log.error("Not a valid input");
+                }
                 return true;
             }
             if(answer2.equals("lastname")||answer2.equals("l")||answer2.equals("last")){
                 System.out.println("What last name would you like to search for?");
-                String answer3 = scn.next();
-                try{sS.getEmployeeByLastName(answer3);} catch (Exception e) {e.printStackTrace();}
+                try{
+                    String answer3 = scn.next();
+                    sS.getEmployeeByLastName(answer3);
+                } catch (Exception e) {
+                    System.err.println("Not a Valid input");
+                    log.error("Not a valid input");
+                }
                 return true;
             }
             if(answer2.equals("employeeid")||answer2.equals("eid")|| answer2.equals("id")){
                 System.out.println("Which employee number would you like?");
-                int answer3 = scn.nextInt();
-                try{sS.getEmployeeByID(answer3);}catch (Exception e) {e.printStackTrace();}
-                return true;
+                try{
+                    int answer3 = scn.nextInt();
+                    sS.getEmployeeByID(answer3);
+                } catch (Exception e) {
+                    System.err.println("Not a Valid input");
+                    log.error("Not a valid input");
+                }
             }
             else
-                System.err.println("Enter a valid option");
+                System.err.println("Enter a valid option"); log.error("Not a valid option");;
             return true;
         }
         else return false;
