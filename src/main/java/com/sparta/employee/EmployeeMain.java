@@ -14,36 +14,36 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class EmployeeMain {
 
+    private static ArrayList<String[]> oddities = new ArrayList<>();
+
     public static void main(String[] args) {
-        String[] fields = null;
 
         long start;
         long end;
-        String filePath = "EmployeeRecords.csv";
+        int threads = 6;
+        String filePath = "EmployeeRecordsLarge.csv";
         ArrayList<EmployeeObject> employeeArrayList = new ArrayList<>();
-        ArrayList<String[]> oddities = new ArrayList<>();
         ArrayList<EmployeeObject> duplicateArrayList = new ArrayList<>();
 
 
         start = System.currentTimeMillis();
-        try {
 
+        try {
             ArrayList<String[]> cleanData = (Files.lines(Paths.get(filePath))
                     .skip(1)
                     .map(line -> line.split(","))
                     .map(EmployeeMain::isValidData) // (e -> isValidData(e))
                     .collect(Collectors.toCollection(ArrayList::new)));
             for (String[] line : cleanData) {
-                employeeArrayList.add(stringArrToEmployee(line));
+                if(line != null)
+                    employeeArrayList.add(stringArrToEmployee(line));
             }
 
         } catch (IOException | ParseException e) {e.printStackTrace();}
 
         Set<EmployeeObject> empHashSet = new HashSet<>();
-        empHashSet.addAll(employeeArrayList); // very quickly gets rid of duplicates, however i do need to get those duplicates into another array
-
+        empHashSet.addAll(employeeArrayList);
         duplicateArrayList.addAll(getDuplicates(employeeArrayList));
-
         employeeArrayList.clear();
         employeeArrayList.addAll(empHashSet);
 
@@ -57,13 +57,13 @@ public class EmployeeMain {
         DBCreationMYSQL dBCreation = new DBCreationMYSQL();
         dBCreation.writeToDB(employeeArrayList);
 
-        int threads = 6;
+
         SplitEmpArrList.splitEmpArrThreaded(employeeArrayList,threads);
 
         end = System.currentTimeMillis();
-        //DatabaseCreation.duplicatesToDB(duplicateArrayList);
+       // DBCreationMYSQL.duplicatesToDB(duplicateArrayList);
         int time = Math.toIntExact(end - start);
-//        DBCreationMYSQL.createTimeDB();
+//        DBCreationMYSQL.createTimeDB(); // i dont want this running everytime otherwise i will lose all of the timing data each time
         DBCreationMYSQL.writeTimeTODB(time,threads);
         System.out.println("Time to insert: "+ (time)+"(ms)");
 
@@ -99,7 +99,10 @@ public class EmployeeMain {
         if (Integer.parseInt(fields[9]) < 0) dataGate = false;
 
         if(dataGate) return fields;
-        else return null;
+        else {
+            oddities.add(fields);
+            return null;
+        }
     }
 
     public static EmployeeObject stringArrToEmployee(String[] inputString) throws ParseException {
@@ -107,7 +110,12 @@ public class EmployeeMain {
     }
 
     public static List<EmployeeObject> getDuplicates(final List<EmployeeObject> empList) {
-        return getDuplicatesMap(empList).values().stream().filter(duplicates ->duplicates.size()>1).flatMap(Collection::stream).collect(Collectors.toList());
+        return getDuplicatesMap(empList)
+                .values()
+                .stream()
+                .filter(duplicates ->duplicates.size()>1)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
     }
     public static Map<String, List<EmployeeObject>> getDuplicatesMap(List<EmployeeObject> empList){

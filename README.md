@@ -1,6 +1,6 @@
-# CSV Reading Project
+# Employee CSV Migration Project
 
-The Sort Manager Project, is a small application used to generate an array of random numbers and them sort them into numerical order.
+The Employee CSV Migration Project, is a small application used to generate an MYSQL database and move data from a supplied CSV file into it, it makes use of functional programming as well as multithreading
 ## Table of Contents
 1. [Introduction](#intro)
 2. [Instructions](#instructions)
@@ -12,22 +12,34 @@ The Sort Manager Project, is a small application used to generate an array of ra
 ## Introduction <a name="intro"><a/>
 
 ## Instructions<a name="instructions"><a/>
-1. installation
-2. database connection
-3. run it
-4.
-
+1. Pull from git.
+2. Change the MYSQL database connection to be one that will connect to your own SQL server, it is advised that this is a MYSQL server as we cannot guarantee that this will work with other SQL server types.
+3. Change the CSV filePath name, so that it is the CSV file you wish to convert.
+4. Run the application.
+5. The time take to move the data will be recorded in two parts, firstly how quickly the Employee objects are created, and secondly how quickly those objects are written to your Database.
+6. After the data is written the application will ask you would like to search for an employee, you can use the keywords: yes, YES, Yes, Y and y anything else will quit the application.
+7. If you choose to search for an employee, you will ba asked which id number employee you would like to search for, enter a valid employee number here and your employee will be found.
 
 ## Features <a name="features"><a/>
+### High Speed Conversion of Data
+This program will quickly move all the data from a CSV file into an MYSQL database very quickly, an average of roughly 4 seconds for a CSV file of about 65000 rows with 10 columns of data in each.
+
+![img_1.png](img_1.png)
+ 
+*Figure 1. - The times shown above are in ms.*
 
 
+### Search Function
+One of the newer features of this program is that with command line you can now search for employees by their ID number, if you dont want to open MYSQL on your own machine.
 
-![]() (name of picture, then picture url)
+![search](searchForEmployees.png) 
+### MultiThreading
+One of the biggest points of interest in this project, is the application of multithreading. The default number of threads used in this application is 6 however the thread variable can be modified. Each thread opens its own connection to the database in order to speed up write times.
 
-
+![thread](thread.png)
 
 ## The Motivation behind the project <a name="project"><a/>
-
+The motivation behind this project was to learn more about how important topics like, functional programming and multithreading actually worked, and how they can be appropriately applied to a task in order to make it more efficient.
 
 
 #### What problem does it solve?
@@ -35,7 +47,7 @@ this project has begun to solve the problem of having to manually move records f
 
 
 #### What did I learn?
-
+I have learnt how to structure a lambda expression, which at first was difficult to understand but as I used them more and more they became easier to understand and use.
 
 
 ## Testing <a name="testing"><a/>
@@ -65,7 +77,7 @@ During various phases of development there has been a number of JUnit tests that
 
 
 ## Future Project Direction <a name="future"><a/>
-I would like to add in a larger variety of search commands from the running of this file. Currently there is only one cammand that can be utilised which is searching for an employee by ID, I would also like to add the functionality to search for them by name
+I would like to add in a larger variety of search commands. Currently, there is only one command that can be utilised which is searching for an employee by ID.
 
 
 ## License <a name="license"><a/>
