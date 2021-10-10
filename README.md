@@ -15,9 +15,11 @@ The Employee CSV Migration Project, is a small application used to generate an M
 2. Change the MYSQL database connection to be one that will connect to your own SQL server, it is advised that this is a MYSQL server as we cannot guarantee that this will work with other SQL server types.
 3. Change the CSV filePath name, so that it is the CSV file you wish to convert.
 4. Run the application.
-5. The time take to move the data will be recorded in two parts, firstly how quickly the Employee objects are created, and secondly how quickly those objects are written to your Database.
+5. The time taken to move the data will be recorded in two parts, firstly how quickly the Employee objects are created, and secondly how quickly those objects are written to your Database.
 6. After the data is written the application will ask you would like to search for an employee, you can use the keywords: y or yes, capitals are allowed anything else will quit the application.
-7. If you choose to search for an employee, you will ba asked how you would like to search for an employee: id number, first name or last name.
+7. If you chose to search for an employee, you will be asked how you would like to search for an employee: id number, first name or last name.
+8. You will then be prompted to input a search term for the specific type you chose previously.
+9. Your search result(s) will be shown in the console.
 
 ## Features <a name="features"><a/>
 ### High Speed Conversion of Data
