@@ -17,7 +17,7 @@ The Employee CSV Migration Project, is a small application used to generate an M
 4. Run the application.
 5. The time taken to move the data will be recorded in two parts, firstly how quickly the Employee objects are created, and secondly how quickly those objects are written to your Database.
 6. After the data is written the application will ask you would like to search for an employee, you can use the keywords: y or yes, capitals are allowed anything else will quit the application.
-7. If you chose to search for an employee, you will be asked how you would like to search for an employee: id number, first name or last name.
+7. If you chose to search for an employee, you will be asked how you would like to search: id number, first name or last name.
 8. You will then be prompted to input a search term for the specific type you chose previously.
 9. Your search result(s) will be shown in the console.
 
