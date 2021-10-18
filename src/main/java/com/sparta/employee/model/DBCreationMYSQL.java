@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class DBCreationMYSQL {
 
     public void createTableInDB() {
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=DESKTOP-QUISOMI,port=3306,user=Dwhite,password=plM45!bn)")) {
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://(host=,port=,user=,password=)")) {
             conn.setAutoCommit(false);
             Statement statement = conn.createStatement();
             try{
